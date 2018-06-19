@@ -1,6 +1,7 @@
 package file.create.ejemplo.com.ejemplocreararchivo;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,22 +39,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                 String fileName = "MyFile.txt";
-                 String content = "Este es el contenido del mensaje";
+                String fileName = "MyFile.txt";
+                String content = "Este es el contenido del mensaje";
 
 
 
 
                 FileOutputStream fileOutputStream = null;
 
+                //File myDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "MyPublicFolder");
+               //
+
+                File myDirectoty1 =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"HAKUNA");
+                myDirectoty1.mkdir();
+                File file = new File(myDirectoty1, "MiArchivo.txt");
+
                 try {
-                    fileOutputStream = openFileOutput(fileName,Context.MODE_PRIVATE);
-                    fileOutputStream.write(content.getBytes());
-
-                    Context context = getApplicationContext();
-
-                    String folder = context.getFilesDir().getAbsolutePath();
-                    text2.setText(folder);
+                    FileOutputStream os = fileOutputStream = new FileOutputStream(file);
+                    String data ="This is the Great text";
+                    os.write(data.getBytes());
+                    os.close();
 
                     fileOutputStream.close();
                 } catch ( Exception e) {// Con exception  se maneja cualquier excepción
