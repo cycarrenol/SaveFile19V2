@@ -1,73 +1,91 @@
 package file.create.ejemplo.com.ejemplocreararchivo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.nio.Buffer;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button create, read;
+    Button create;
 
-    TextView text, text2;
+    TextView textTXT;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         create = (Button) findViewById(R.id.create);// asigno a la variable create (de tipo botton) al elemento Button del layout
-        read   = (Button) findViewById(R.id.read);
-        text = (TextView) findViewById(R.id.texto);// tenga presente que lo que está después del  R.id es el id del elemento del layout
-        text2 = (TextView) findViewById(R.id.texto2);
 
-        create.setOnClickListener(new View.OnClickListener() {
+        textTXT = (TextView) findViewById(R.id.textoTXT);// /Contenido del  archivo/ tenga presente que lo que está después del  R.id es el id del elemento del layout
+       // textRuta = (TextView) findViewById(R.id.textoRUTA);// muestra la ruta de almacenamiento del archivo
+
+
+        create.setOnClickListener(new View.OnClickListener() {// METODO PARA CREAR EL ARCHIVO EN UNA CARPETA
             @Override
             public void onClick(View view) {
 
-                String fileName = "MyFile.txt";
-                String content = "Este es el contenido del mensaje";
-
-
-
+                String archivo ="Miarchivo.txt";
+                create.setBackgroundColor(Color.GREEN);
 
                 FileOutputStream fileOutputStream = null;
 
-                //File myDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "MyPublicFolder");
-               //
+                File myDirectoty1 =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Carpeta_resistividades");
 
-                File myDirectoty1 =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"HAKUNA");
                 myDirectoty1.mkdir();
-                File file = new File(myDirectoty1, "MiArchivo.txt");
+                File file = new File(myDirectoty1, archivo);
+
+                Context context = getApplicationContext();
+
+                String ruta = myDirectoty1.getAbsolutePath();
+              //  textRuta.setText(ruta);// Imprime la ruta del almacenamiento  del archivo
+
 
                 try {
+
                     FileOutputStream os = fileOutputStream = new FileOutputStream(file);
-                    String data ="This is the Great text";
+                    String data ="This is the Great text,This is the Great text,This is the Great text,This is the Great text,This is the Great text,This is the Great text";
+                    textTXT.setText(data);
                     os.write(data.getBytes());
                     os.close();
-
-                    fileOutputStream.close();
                 } catch ( Exception e) {// Con exception  se maneja cualquier excepción
                     e.printStackTrace();
                 }
             }
         });
 
-        read.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+
+
+        /*
+        read.setOnClickListener(new View.OnClickListener() {//Mostrar lo que tiene el archivo
+
             @Override
             public void onClick(View view) {
                 try {
@@ -81,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         stringBuilder.append(line).append("\n");
                     }
 
-                    text.setText(stringBuilder.toString());
+                    textTXT.setText(stringBuilder.toString());
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }catch (UnsupportedEncodingException e){
@@ -92,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        */
+
 
 
     }
